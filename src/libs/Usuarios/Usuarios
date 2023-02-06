@@ -1,0 +1,64 @@
+export interface IUsuario { //interface, extructura que define un tipo de dato
+    codigo: string;
+    correo: string;
+    nombre: string;
+    password: string;
+    roles?: string[];
+    creado?: Date;
+    ultimoAcceso?: Date; //signo de ?, ya que puede ser opcional
+}
+
+export class Usuarios {
+    
+    private usuarios : IUsuario[];
+    constructor(){
+        this.usuarios = [];
+    }
+    getAll(){
+        return this.usuarios;
+    } 
+    getById(codigo: string){
+        const usuariosToReturn = this.usuarios.find((emp)=>{
+          return emp.codigo === codigo;
+        });
+        return usuariosToReturn;
+      } 
+    add(nuevaUsuarios : IUsuario) {
+        const date = new Date();
+        const nueva: IUsuario = {
+            ...nuevaUsuarios,
+            codigo: (Math.random()*1000).toString()+new Date().getTime().toString(),
+            correo: (Math.random()*1000).toString()+new Date().getTime().toString(),
+            nombre: (Math.random()*1000).toString()+new Date().getTime().toString(),
+            password: (Math.random()*1000).toString()+new Date().getTime().toString(),
+        }
+        this.usuarios.push(nueva);
+        return true;
+    }
+    
+    update (updateUsuarios: IUsuario){
+        const newUsuarios: IUsuario[] = this.usuarios.map((emp)=>{
+            if ( emp.codigo === updateUsuarios.codigo ) {
+                return {...emp, ...updateUsuarios, update: new Date()};
+            }
+            return emp;
+        });
+        this.usuarios = newUsuarios;
+        return true;
+    }
+
+    delete(codigo: string){
+        const usuariosToDelete = this.usuarios.find((emp)=>{
+          return emp.codigo === codigo;
+        });
+        if(usuariosToDelete){
+          const newUsuarios: IUsuario[] = this.usuarios.filter((emp)=>{
+            return emp.codigo !== codigo;
+          });
+          this.usuarios = newUsuarios;
+          return true;
+        }
+        return false;
+      }
+
+}

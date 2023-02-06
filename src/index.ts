@@ -17,7 +17,7 @@ import { AddressInfo } from 'net';
 import http from 'http';
 
 const host = process.env.HOST || '0.0.0.0';
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 const startServer = () => {
   const app = createServer();
   const server = http.createServer(app);
