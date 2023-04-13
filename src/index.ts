@@ -13,6 +13,7 @@ moduleAlias.addAliases({
 });
 
 import { createServer } from '@config/express';
+import { MongoDBConn } from '@server/dao/MongoDBConn';
 import { AddressInfo } from 'net';
 import http from 'http';
 
@@ -41,5 +42,8 @@ const startServer = () => {
     });
   });
 };
-
-startServer();
+MongoDBConn.getConnection().then(()=>{
+  startServer();
+}).catch((error)=>{
+  console.error("No se pudo conectar a la DB", error);
+});
