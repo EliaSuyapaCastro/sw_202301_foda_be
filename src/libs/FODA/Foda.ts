@@ -1,9 +1,7 @@
-import { IDataAccessObject } from "@dao/IDataAccessObject"
+import { IDataAccessObject } from "@dao/IDataAccessObject";
 import { FodaDao } from "@server/dao/models/FODA/FodaDao";
-//import { FodaDao } from "@dao/models/Foda/FodaDao";
 import { IFoda } from "@server/dao/models/FODA/IFoda";
-//import { IFoda, IFodaEstados } from "@server/dao/models/Foda/IFoda";
-//import { EFodaType } from "@server/dao/models/Foda/IFodaEntry";
+//import { EFodaType } from "@dao/models/Foda/IFodaEntry";
 
 export class Foda {
   private fodaDao: FodaDao;
@@ -22,12 +20,12 @@ export class Foda {
       return null;
     }
   }
-  public async updateFoda(fodaId: string, type: EFodaType) {
+  /*public async updateFoda(fodaId: string, type: EFodaType) {
     const result = await (this.fodaDao as FodaDao).updateCounter(fodaId, type);
     console.log('updateFoda:', result);
     const rt = await this.fodaDao.findByID(fodaId);
     return rt;
-  }
+  }*/
   private async setUpdates(fodaId, updateCmd: Partial<IFoda>) {
     await this.fodaDao.update(fodaId, { ...updateCmd, updatedAt: new Date() });
     const updatedFoda = await this.fodaDao.findByID(fodaId);
@@ -39,12 +37,11 @@ export class Foda {
   public setNombre(fodaId: string, nombre: string) {
     return this.setUpdates(fodaId, { nombre: nombre });
   }
-  public setEstado(fodaId: string, estado: IFodaEstados) {
+  /*public setEstado(fodaId: string, estado: IFodaEstados) {
     return this.setUpdates(fodaId, { estado });
-  }
+  }*/
   public getAllFromEmpresa(empresaId: string) {
     return this.fodaDao.findByFilter({ "empresa.id": this.fodaDao.getIDFromString(empresaId) });
   }
 }
-
 ///  const [t5,,t3] = [5,9,3,1,4];
